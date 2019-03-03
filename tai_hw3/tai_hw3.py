@@ -75,7 +75,7 @@ def affine_tester():
 
     """
     a = int(input("What value for key a? "))
-    b = int(input("What value for key a? "))
+    b = int(input("What value for key b? "))
 
     msg = input("What message would you like to encrypt? ")
     formatted_msg = message_formatter(msg)
