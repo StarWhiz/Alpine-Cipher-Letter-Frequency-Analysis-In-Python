@@ -3,6 +3,7 @@ import operator
 
 englishLetterFreqSorted = ['e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y', 'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z']
 
+
 def get_value_from_letter(letter):
     return {
         'a': 0,
@@ -65,7 +66,7 @@ def get_letter_from_value(number):
     }[number]
 
 
-def affine_tester(message):
+def affine_tester():
     """
     This function takes in a string to be encrypted  and formats the message.
     a and b are keys for the cipher
@@ -73,10 +74,13 @@ def affine_tester(message):
 
     :param message:
     """
-    a = 9
-    b = 5
-    msg = message_formatter(message)
-    letter_frequency_analysis(affine_cipher(a, b, msg))
+
+    a = int(input("What value for key a? "))
+    b = int(input("What value for key a? "))
+
+    msg = input("What message would you like to encrypt?")
+    formatted_msg = message_formatter(msg)
+    letter_frequency_analysis(affine_cipher(a, b, formatted_msg))
 
 
 def message_formatter(string):
@@ -103,7 +107,7 @@ def affine_cipher(a, b, message):
         ciphertext = ciphertext + get_letter_from_value(y)
 
     print("Resulting ciphertext:")
-    print(ciphertext)
+    print(ciphertext + "\n")
     return ciphertext
 
 
@@ -122,6 +126,9 @@ def letter_frequency_analysis(ciphertext):
 
     analysis_dictionary = dict(zip(sorted_cipher_list_letter, englishLetterFreqSorted))
 
+    print("Here is the letter frequency dictionary:")
+    print(sorted_cipher_list_letter)
+    print(englishLetterFreqSorted)
     print(analysis_dictionary)
 
     result = ""
@@ -147,10 +154,8 @@ def get_letter_count_dict(message):
     return sorted_letter_cnt_dict
 
 
-test_msg = r"""
-A message is a discrete unit of communication intended by the source for consumption by some recipient or group of recipients. A message may be delivered by various means, including courier, telegraphy, carrier pigeon and electronic bus. A message can be the content of a broadcast.
-"""
-affine_tester(test_msg)
+affine_tester()
+
 
 
 
