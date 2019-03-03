@@ -1,5 +1,7 @@
 import re
+import operator
 
+englishLetterFreqSorted = ['e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y', 'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z']
 
 def get_value_from_letter(letter):
     return {
@@ -97,35 +99,58 @@ def affine_cipher(a, b, message):
 
     for letter in message:
         x = get_value_from_letter(letter)
-        y = (a * x + b ) % 26
-
+        y = (a * x + b) % 26
         ciphertext = ciphertext + get_letter_from_value(y)
+
     print("Resulting ciphertext:")
     print(ciphertext)
     return ciphertext
 
 
 def letter_frequency_analysis(ciphertext):
-    get_letter_count(ciphertext)
+    """
+    This function take a ciphertext and tries to covert each letter in the ciphertext according to letter frequency.
+
+    It then prints this conversion
+
+    Example: if letter 'z' is most common in the cipher-text. Then 'z' is converted to letter 'e' because e is the most
+    common letter in an English sentence.
+    :param ciphertext:
+    """
+    sorted_cipher_list_letter_value = get_letter_count_dict(ciphertext)
+    sorted_cipher_list_letter = [x[0] for x in sorted_cipher_list_letter_value]
+
+    analysis_dictionary = dict(zip(sorted_cipher_list_letter, englishLetterFreqSorted))
+
+    print(analysis_dictionary)
+
+    result = ""
+
+    for character in ciphertext:
+        result = result + analysis_dictionary.__getitem__(character)
+    print(result)
 
 
-def get_letter_count(message):
+def get_letter_count_dict(message):
+    """
+    This function takes the original message and counts the letter frequency in the message.
+        :return sorted_letter_cnt_dict as a dictionary
+    """
+
     letter_count = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0, 'f': 0, 'g': 0, 'h': 0, 'i': 0, 'j': 0, 'k': 0, 'l': 0, 'm': 0, 'n': 0, 'o': 0, 'p': 0, 'q': 0, 'r': 0, 's': 0, 't': 0, 'u': 0, 'v': 0, 'w': 0, 'x': 0, 'y': 0, 'z': 0}
     for letter in message:
         letter_count[letter] += 1
-    print(letter_count)
+
+    sorted_letter_cnt_dict = sorted(letter_count.items(), key=operator.itemgetter(1))
+    sorted_letter_cnt_dict.reverse()
+
+    return sorted_letter_cnt_dict
 
 
-
-a = r"""
-Swift is a fantastic way to write software, whether its for phones, desktops, servers, or anything else that runs code. Its a safe, fast, and interactive programming language that combines the best in modern language thinking with wisdom from the wider Apple engineering culture and the diverse contributions from its open-source community. The compiler is optimized for performance and the language is optimized for development, without compromising on either.
-
-Swift is friendly to new programmers. Its an industrial-quality programming language thats as expressive and enjoyable as a scripting language. Writing Swift code in a playground lets you experiment with code and see the results immediately, without the overhead of building and running an app.
-
-Swift defines away large classes of common programming errors by adopting modern programming pattern.
+test_msg = r"""
+A message is a discrete unit of communication intended by the source for consumption by some recipient or group of recipients. A message may be delivered by various means, including courier, telegraphy, carrier pigeon and electronic bus. A message can be the content of a broadcast.
 """
-
-affine_tester(a)
+affine_tester(test_msg)
 
 
 
