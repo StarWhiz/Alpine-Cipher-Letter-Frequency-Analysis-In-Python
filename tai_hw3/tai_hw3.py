@@ -78,9 +78,20 @@ def affine_tester():
     a = int(input("What value for key a? "))
     b = int(input("What value for key a? "))
 
-    msg = input("What message would you like to encrypt?")
+    msg = "hello fucking world please dont make me do this man""#input" # "What message would you like to encrypt?")
     formatted_msg = message_formatter(msg)
-    letter_frequency_analysis(affine_cipher(a, b, formatted_msg))
+    result = letter_frequency_analysis(affine_cipher(a, b, formatted_msg))
+    print("Current ciphertext: ")
+    print(result)
+    swap_result = result
+
+    while 1:
+        letter1 = (input("What letter to replace? "))
+        letter2 = (input("What do you want to replace it with? "))
+        swap_result = letters_to_swap(letter1, letter2, swap_result)
+        print(swap_result)
+
+
 
 
 def message_formatter(string):
@@ -96,6 +107,15 @@ def message_formatter(string):
 
 
 def affine_cipher(a, b, message):
+    """
+    This function encrypts message to ciphertext.
+
+    :param a: which is part of the key
+    :param b: which is part of the key
+    :param message:
+    :return ciphertext:
+    """
+
     ciphertext = ""
     print("Original Message: ")
     print(message)
@@ -105,9 +125,6 @@ def affine_cipher(a, b, message):
         x = get_value_from_letter(letter)
         y = (a * x + b) % 26
         ciphertext = ciphertext + get_letter_from_value(y)
-
-    print("Resulting ciphertext:")
-    print(ciphertext + "\n")
     return ciphertext
 
 
@@ -129,13 +146,24 @@ def letter_frequency_analysis(ciphertext):
     print("Here is the letter frequency dictionary:")
     print(sorted_cipher_list_letter)
     print(englishLetterFreqSorted)
-    print(analysis_dictionary)
 
     result = ""
 
     for character in ciphertext:
         result = result + analysis_dictionary.__getitem__(character)
-    print(result)
+    return result
+
+
+def letters_to_swap (letter1, letter2, result):
+    temp = ""
+    for c in result:
+        if c == letter1:
+            temp = temp + letter2
+        elif c == letter2:
+            temp = temp + letter1
+        else:
+            temp = temp + c
+    return temp
 
 
 def get_letter_count_dict(message):
