@@ -74,25 +74,48 @@ def affine_tester():
     The keys and message are passed to affine_cipher
 
     """
-    a = int(input("What value for key a? "))
-    b = int(input("What value for key b? "))
-
-    msg = input("What message would you like to encrypt? ")
-    formatted_msg = message_formatter(msg)
-    ciphertext = affine_cipher(a, b, formatted_msg)
-    result_analysis = letter_frequency_analysis(ciphertext)
-
-    print("Current ciphertext after letter frequency analysis: " + result_analysis)
-    swap_result = result_analysis
 
     while 1:
-        letter1 = (input("What letter to replace? (Enter \'quit\' to quit): "))
-        if letter1 == 'quit':
-            break;
+        menu = input("""******* Affine Cipher Menu Options *******
+        1. Encrypt a message
+        2. Apply frequency analysis on a ciphertext
+        3. Quit
+        """)
+        if menu == '1':
+            a = int(input("What value for key a? "))
+            b = int(input("What value for key b? "))
+            msg = input("What message would you like to encrypt? ")
+            formatted_msg = message_formatter(msg)
+            ciphertext = affine_cipher(a, b, formatted_msg)
+            print("Ciphertext after encryption: " + ciphertext)
 
-        letter2 = (input("What do you want to replace it with? "))
-        swap_result = letters_to_swap(letter1, letter2, swap_result)
-        print("Result Of Swap: " + swap_result)
+        elif menu == '2':
+            ciphertext = input("What ciphertext would you like to apply letter frequency analysis to?")
+            ciphertext = message_formatter(ciphertext)
+            print("Current ciphertext: ")
+            print(ciphertext)
+            frequency_dictionary = letter_frequency_analysis(ciphertext)
+            print("Letter Frequencies: ")
+            print(frequency_dictionary)
+            print()
+
+            swap_result = ciphertext
+            while 1:
+                letter1 = (input("What letter to substitute? or type \'quit\' to quit): "))
+                if letter1 == 'quit':
+                    break;
+
+                letter2 = (input("What do you want to substitute it with? (Substitute with Capitals for easy tracking): "))
+                swap_result = letters_to_swap(letter1, letter2, swap_result)
+                print("Result Of Swap: " + swap_result)
+                print("Letter Frequencies: ")
+                print()
+                print(frequency_dictionary)
+
+        elif menu == '3':
+            break;
+        else:
+            print("Incorrect menu option try again.")
 
 
 def message_formatter(string):
@@ -130,8 +153,6 @@ def affine_cipher(a, b, message):
             ciphertext = ciphertext + get_letter_from_value(y)
         else:
             ciphertext = ciphertext + letter
-
-    print("Ciphertext after encryption: " + ciphertext)
     return ciphertext
 
 
@@ -146,26 +167,22 @@ def letter_frequency_analysis(ciphertext):
     :param ciphertext:
     """
     sorted_cipher_list_letter_value = get_letter_count_dict(ciphertext)
-    sorted_cipher_list_letter = [x[0] for x in sorted_cipher_list_letter_value]
+    # sorted_cipher_list_letter = [x[0] for x in sorted_cipher_list_letter_value]
 
-    analysis_dictionary = dict(zip(sorted_cipher_list_letter, englishLetterFreqSorted))
+    # analysis_dictionary = dict(zip(sorted_cipher_list_letter, englishLetterFreqSorted))
 
-    print("\nHere is the letter frequency dictionary:")
-    print(sorted_cipher_list_letter)
-    print(englishLetterFreqSorted)
-    print()
+    return sorted_cipher_list_letter_value
 
-    result = ""
-
-    for character in ciphertext:
-        if character != ' ':
-            result = result + analysis_dictionary.__getitem__(character)
-        else:
-            result = result + character
-    return result
+    # result = ""
+    # for character in ciphertext:
+    #     if character != ' ':
+    #         result = result + analysis_dictionary.__getitem__(character)
+    #     else:
+    #         result = result + character
+    # return result
 
 
-def letters_to_swap (letter1, letter2, ciphertext):
+def letters_to_swap(letter1, letter2, ciphertext):
     """
     This function replaces letter1 with letter2 and replaces letter2 with letter1.
 
