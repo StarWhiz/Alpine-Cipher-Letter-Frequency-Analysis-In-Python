@@ -85,7 +85,10 @@ def affine_tester():
     swap_result = result
 
     while 1:
-        letter1 = (input("What letter to replace? "))
+        letter1 = (input("What letter to replace? (Enter \'quit\' to quit): "))
+        if letter1 == 'quit':
+            break;
+
         letter2 = (input("What do you want to replace it with? "))
         swap_result = letters_to_swap(letter1, letter2, swap_result)
         print(swap_result)
