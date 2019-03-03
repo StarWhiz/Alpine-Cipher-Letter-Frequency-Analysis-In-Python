@@ -79,10 +79,11 @@ def affine_tester():
 
     msg = input("What message would you like to encrypt? ")
     formatted_msg = message_formatter(msg)
-    result = letter_frequency_analysis(affine_cipher(a, b, formatted_msg))
-    print("Current ciphertext: ")
-    print(result)
-    swap_result = result
+    ciphertext = affine_cipher(a, b, formatted_msg)
+    result_analysis = letter_frequency_analysis(ciphertext)
+
+    print("Current ciphertext after letter frequency analysis: " + result_analysis)
+    swap_result = result_analysis
 
     while 1:
         letter1 = (input("What letter to replace? (Enter \'quit\' to quit): "))
@@ -91,7 +92,7 @@ def affine_tester():
 
         letter2 = (input("What do you want to replace it with? "))
         swap_result = letters_to_swap(letter1, letter2, swap_result)
-        print(swap_result)
+        print("Result Of Swap: " + swap_result)
 
 
 def message_formatter(string):
@@ -117,14 +118,15 @@ def affine_cipher(a, b, message):
     """
 
     ciphertext = ""
-    print("Original Message: ")
-    print(message)
+    print("Original Message: " + message)
     print("\nEncrypting message with key (" + str(a) + ", " + str(b) + ")...\n")
 
     for letter in message:
         x = get_value_from_letter(letter)
         y = (a * x + b) % 26
         ciphertext = ciphertext + get_letter_from_value(y)
+
+    print("Ciphertext after encryption: " + ciphertext)
     return ciphertext
 
 
@@ -143,10 +145,10 @@ def letter_frequency_analysis(ciphertext):
 
     analysis_dictionary = dict(zip(sorted_cipher_list_letter, englishLetterFreqSorted))
 
-    print("Here is the letter frequency dictionary:")
+    print("\nHere is the letter frequency dictionary:")
     print(sorted_cipher_list_letter)
     print(englishLetterFreqSorted)
-    print("\n")
+    print()
 
     result = ""
 
