@@ -154,12 +154,12 @@ def letter_frequency_analysis(ciphertext):
 
 def letters_to_swap (letter1, letter2, ciphertext):
     """
-    This function replaces letter1 with letter 2 and replaces letter2 with letter1.
+    This function replaces letter1 with letter2 and replaces letter2 with letter1.
 
     :param letter1:
     :param letter2:
     :param ciphertext:
-    :return:
+    :return: ciphertext with swapped letters
     """
     result = ""
     for c in ciphertext:
