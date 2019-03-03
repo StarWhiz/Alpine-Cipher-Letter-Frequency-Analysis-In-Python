@@ -77,7 +77,7 @@ def affine_tester():
     a = int(input("What value for key a? "))
     b = int(input("What value for key a? "))
 
-    msg = "hello fucking world please dont make me do this man"
+    msg = input("What message would you like to encrypt? ")
     formatted_msg = message_formatter(msg)
     result = letter_frequency_analysis(affine_cipher(a, b, formatted_msg))
     print("Current ciphertext: ")
@@ -143,6 +143,7 @@ def letter_frequency_analysis(ciphertext):
     print("Here is the letter frequency dictionary:")
     print(sorted_cipher_list_letter)
     print(englishLetterFreqSorted)
+    print("\n")
 
     result = ""
 
@@ -151,16 +152,24 @@ def letter_frequency_analysis(ciphertext):
     return result
 
 
-def letters_to_swap (letter1, letter2, result):
-    temp = ""
-    for c in result:
+def letters_to_swap (letter1, letter2, ciphertext):
+    """
+    This function replaces letter1 with letter 2 and replaces letter2 with letter1.
+
+    :param letter1:
+    :param letter2:
+    :param ciphertext:
+    :return:
+    """
+    result = ""
+    for c in ciphertext:
         if c == letter1:
-            temp = temp + letter2
+            result = result + letter2
         elif c == letter2:
-            temp = temp + letter1
+            result = result + letter1
         else:
-            temp = temp + c
-    return temp
+            result = result + c
+    return result
 
 
 def get_letter_count_dict(message):
