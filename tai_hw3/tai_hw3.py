@@ -1,7 +1,8 @@
 import re
 import operator
 
-englishLetterFreqSorted = ['e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y', 'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z']
+englishLetterFreqSorted = ['e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y',
+                           'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z']
 
 
 def get_value_from_letter(letter):
@@ -72,13 +73,11 @@ def affine_tester():
     a and b are keys for the cipher
     The keys and message are passed to affine_cipher
 
-    :param message:
     """
-
     a = int(input("What value for key a? "))
     b = int(input("What value for key a? "))
 
-    msg = "hello fucking world please dont make me do this man""#input" # "What message would you like to encrypt?")
+    msg = "hello fucking world please dont make me do this man"
     formatted_msg = message_formatter(msg)
     result = letter_frequency_analysis(affine_cipher(a, b, formatted_msg))
     print("Current ciphertext: ")
@@ -90,8 +89,6 @@ def affine_tester():
         letter2 = (input("What do you want to replace it with? "))
         swap_result = letters_to_swap(letter1, letter2, swap_result)
         print(swap_result)
-
-
 
 
 def message_formatter(string):
@@ -172,7 +169,9 @@ def get_letter_count_dict(message):
         :return sorted_letter_cnt_dict as a dictionary
     """
 
-    letter_count = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0, 'f': 0, 'g': 0, 'h': 0, 'i': 0, 'j': 0, 'k': 0, 'l': 0, 'm': 0, 'n': 0, 'o': 0, 'p': 0, 'q': 0, 'r': 0, 's': 0, 't': 0, 'u': 0, 'v': 0, 'w': 0, 'x': 0, 'y': 0, 'z': 0}
+    letter_count = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0, 'f': 0, 'g': 0, 'h': 0, 'i': 0, 'j': 0, 'k': 0, 'l': 0,
+                    'm': 0, 'n': 0, 'o': 0, 'p': 0, 'q': 0, 'r': 0, 's': 0, 't': 0, 'u': 0, 'v': 0, 'w': 0, 'x': 0,
+                    'y': 0, 'z': 0}
     for letter in message:
         letter_count[letter] += 1
 
