@@ -97,12 +97,14 @@ def affine_tester():
 
 def message_formatter(string):
     """
-    This function returns a formatted string where it becomes all lowercase without any other characters in between.
+    This function returns a formatted string where it becomes all lowercase. Any other characters will be replaced
+    with a whitespace.
 
     :param string:
     :return string_to_return:
     """
-    string = re.sub('[^0-9a-zA-Z]+', '', string)
+    # string = re.sub('[^0-9a-zA-Z]+', '', string)
+    string = re.sub('[^0-9a-zA-Z(^\s)]+', ' ', string)
     string_to_return = string.lower()
     return string_to_return
 
@@ -122,9 +124,12 @@ def affine_cipher(a, b, message):
     print("\nEncrypting message with key (" + str(a) + ", " + str(b) + ")...\n")
 
     for letter in message:
-        x = get_value_from_letter(letter)
-        y = (a * x + b) % 26
-        ciphertext = ciphertext + get_letter_from_value(y)
+        if letter != ' ':
+            x = get_value_from_letter(letter)
+            y = (a * x + b) % 26
+            ciphertext = ciphertext + get_letter_from_value(y)
+        else:
+            ciphertext = ciphertext + letter
 
     print("Ciphertext after encryption: " + ciphertext)
     return ciphertext
@@ -153,7 +158,10 @@ def letter_frequency_analysis(ciphertext):
     result = ""
 
     for character in ciphertext:
-        result = result + analysis_dictionary.__getitem__(character)
+        if character != ' ':
+            result = result + analysis_dictionary.__getitem__(character)
+        else:
+            result = result + character
     return result
 
 
@@ -187,7 +195,8 @@ def get_letter_count_dict(message):
                     'm': 0, 'n': 0, 'o': 0, 'p': 0, 'q': 0, 'r': 0, 's': 0, 't': 0, 'u': 0, 'v': 0, 'w': 0, 'x': 0,
                     'y': 0, 'z': 0}
     for letter in message:
-        letter_count[letter] += 1
+        if letter != ' ':
+            letter_count[letter] += 1
 
     sorted_letter_cnt_dict = sorted(letter_count.items(), key=operator.itemgetter(1))
     sorted_letter_cnt_dict.reverse()
